@@ -70,6 +70,11 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
 }
 .cursor-ring.hovered { width: 56px; height: 56px; opacity: 0.4; }
 
+/* Hide cursor on mobile devices */
+@media (max-width: 768px) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
 /* ============================================================
    NOISE TEXTURE OVERLAY
    ============================================================ */
@@ -1230,7 +1235,6 @@ footer {
   gap: 40px; max-width: 1000px; margin: 0 auto;
   text-align: center;
 }
-.number-item {}
 .number-val {
   font-family: 'Cormorant Garamond', serif;
   font-size: 3.5rem; font-weight: 700;
@@ -2383,27 +2387,30 @@ footer {
 // ============================================================
 // CURSOR
 // ============================================================
-const dot = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
+// Only initialize cursor on desktop devices (not touch devices)
+if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && !('ontouchstart' in window)) {
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
 
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-});
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+  });
 
-function animateRing() {
-  rx += (mx - rx) * 0.14;
-  ry += (my - ry) * 0.14;
-  ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
-  requestAnimationFrame(animateRing);
+  function animateRing() {
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .country-card, .univ-card, .service-card, .faq-q, .testimonial-card').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+  });
 }
-animateRing();
-
-document.querySelectorAll('a, button, .country-card, .univ-card, .service-card, .faq-q, .testimonial-card').forEach(el => {
-  el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
-  el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-});
 
 // ============================================================
 // NAVBAR SCROLL
