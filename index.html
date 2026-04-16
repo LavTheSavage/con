@@ -8,9 +8,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   CSS VARIABLES & RESET
-   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {
+  outline: 1px solid red !important;
+}
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
 :root {
   --gold: #C9A84C;
   --gold-light: #E8C97A;
@@ -69,11 +79,6 @@ button { cursor: none; border: none; background: none; font-family: inherit; }
   opacity: 0.7;
 }
 .cursor-ring.hovered { width: 56px; height: 56px; opacity: 0.4; }
-
-/* Hide cursor on mobile devices */
-@media (max-width: 768px) {
-  .cursor-dot, .cursor-ring { display: none; }
-}
 
 /* ============================================================
    NOISE TEXTURE OVERLAY
@@ -212,27 +217,6 @@ body::before {
   background: radial-gradient(circle, rgba(26,51,88,0.6) 0%, transparent 70%);
   left: 10%; bottom: 10%;
   animation-delay: -4s;
-}
-
-@media (max-width: 768px) {
-  .hero-orb-1 {
-    width: 300px; height: 300px;
-    right: -80px;
-  }
-  .hero-orb-2 {
-    width: 150px; height: 150px;
-    left: -30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-orb-1 {
-    display: none;
-  }
-  .hero-orb-2 {
-    width: 120px; height: 120px;
-    left: -50px;
-  }
 }
 @keyframes orbFloat {
   0%, 100% { transform: translateY(0) scale(1); }
@@ -533,22 +517,6 @@ section { padding: 100px 5%; position: relative; }
   margin-right: auto;
   padding: 0 20px;
 }
-
-@media (max-width: 768px) {
-  .countries-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    padding: 0 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .countries-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 0 12px;
-  }
-}
 .country-card {
   border-radius: var(--radius);
   overflow: hidden;
@@ -831,20 +799,6 @@ section { padding: 100px 5%; position: relative; }
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   position: relative;
-}
-
-@media (max-width: 768px) {
-  .testimonial-card {
-    width: 300px;
-    padding: 24px;
-  }
-}
-
-@media (max-width: 480px) {
-  .testimonial-card {
-    width: 280px;
-    padding: 20px;
-  }
 }
 .testimonial-quote {
   font-size: 3rem; line-height: 1;
@@ -1203,11 +1157,6 @@ footer {
   .hero-scroll { display: none; }
   .univ-grid { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 1200px) {
-  .about-grid { grid-template-columns: 1fr 1fr; }
-  .process-steps { grid-template-columns: 1fr 1fr 1fr; }
-  .services-grid { grid-template-columns: 1fr 1fr 1fr; }
-}
 @media (max-width: 560px) {
   .hero-stats { flex-direction: column; gap: 2px; }
   .hero-stat { border-radius: 0 !important; }
@@ -1216,11 +1165,6 @@ footer {
   .footer-grid { grid-template-columns: 1fr; }
   .univ-grid { grid-template-columns: 1fr; }
   .process-steps { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-  section { padding: 60px 5%; }
-  .services-grid { grid-template-columns: 1fr; }
 }
 
 /* ============================================================
@@ -2448,30 +2392,27 @@ footer {
 // ============================================================
 // CURSOR
 // ============================================================
-// Only initialize cursor on desktop devices (not touch devices)
-if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && !('ontouchstart' in window)) {
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
-  });
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+});
 
-  function animateRing() {
-    rx += (mx - rx) * 0.14;
-    ry += (my - ry) * 0.14;
-    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.querySelectorAll('a, button, .country-card, .univ-card, .service-card, .faq-q, .testimonial-card').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
-  });
+function animateRing() {
+  rx += (mx - rx) * 0.14;
+  ry += (my - ry) * 0.14;
+  ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+  requestAnimationFrame(animateRing);
 }
+animateRing();
+
+document.querySelectorAll('a, button, .country-card, .univ-card, .service-card, .faq-q, .testimonial-card').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+});
 
 // ============================================================
 // NAVBAR SCROLL
