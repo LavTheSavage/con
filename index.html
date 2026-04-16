@@ -2387,9 +2387,8 @@ footer {
 </div>
 
 <script>
-// ============================================================
-// CURSOR
-// ============================================================
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+if (!isTouchDevice) {
 const dot = document.getElementById('cursorDot');
 const ring = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
@@ -2411,6 +2410,10 @@ document.querySelectorAll('a, button, .country-card, .univ-card, .service-card, 
   el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
   el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
 });
+} else {
+  document.getElementById('cursorDot').style.display = 'none';
+  document.getElementById('cursorRing').style.display = 'none';
+}
 
 // ============================================================
 // NAVBAR SCROLL
