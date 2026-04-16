@@ -213,6 +213,27 @@ body::before {
   left: 10%; bottom: 10%;
   animation-delay: -4s;
 }
+
+@media (max-width: 768px) {
+  .hero-orb-1 {
+    width: 300px; height: 300px;
+    right: -80px;
+  }
+  .hero-orb-2 {
+    width: 150px; height: 150px;
+    left: -30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-orb-1 {
+    display: none;
+  }
+  .hero-orb-2 {
+    width: 120px; height: 120px;
+    left: -50px;
+  }
+}
 @keyframes orbFloat {
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-30px) scale(1.05); }
@@ -512,6 +533,22 @@ section { padding: 100px 5%; position: relative; }
   margin-right: auto;
   padding: 0 20px;
 }
+
+@media (max-width: 768px) {
+  .countries-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .countries-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 0 12px;
+  }
+}
 .country-card {
   border-radius: var(--radius);
   overflow: hidden;
@@ -794,6 +831,20 @@ section { padding: 100px 5%; position: relative; }
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    width: 300px;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial-card {
+    width: 280px;
+    padding: 20px;
+  }
 }
 .testimonial-quote {
   font-size: 3rem; line-height: 1;
@@ -1152,6 +1203,11 @@ footer {
   .hero-scroll { display: none; }
   .univ-grid { grid-template-columns: 1fr 1fr; }
 }
+@media (max-width: 1200px) {
+  .about-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
 @media (max-width: 560px) {
   .hero-stats { flex-direction: column; gap: 2px; }
   .hero-stat { border-radius: 0 !important; }
@@ -1160,6 +1216,11 @@ footer {
   .footer-grid { grid-template-columns: 1fr; }
   .univ-grid { grid-template-columns: 1fr; }
   .process-steps { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  section { padding: 60px 5%; }
+  .services-grid { grid-template-columns: 1fr; }
 }
 
 /* ============================================================
